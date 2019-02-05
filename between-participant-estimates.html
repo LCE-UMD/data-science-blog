@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 14 Between-participant estimates | Data Science</title>
+  <meta name="description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 14 Between-participant estimates | Data Science" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research." />
+  <meta name="github-repo" content="https://github.com/AdnanRgithub/AdnanRgithub.github.io" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 14 Between-participant estimates | Data Science" />
+  
+  <meta name="twitter:description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research." />
+  
+
+<meta name="author" content="Luiz Pessoa">
+
+
+<meta name="date" content="2019-02-02">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="within-and-between-participant-variability.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Book Purpose</a></li>
+<li class="chapter" data-level="2" data-path="the-magic-of-the-central-limit-theorem.html"><a href="the-magic-of-the-central-limit-theorem.html"><i class="fa fa-check"></i><b>2</b> The magic of the central limit theorem:</a><ul>
+<li class="chapter" data-level="2.1" data-path="the-magic-of-the-central-limit-theorem.html"><a href="the-magic-of-the-central-limit-theorem.html#sampling-sampling-sampling"><i class="fa fa-check"></i><b>2.1</b> Sampling, sampling, sampling…</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="applying-the-central-limit-theorem.html"><a href="applying-the-central-limit-theorem.html"><i class="fa fa-check"></i><b>3</b> Applying the Central Limit Theorem</a><ul>
+<li class="chapter" data-level="3.1" data-path="applying-the-central-limit-theorem.html"><a href="applying-the-central-limit-theorem.html#an-example"><i class="fa fa-check"></i><b>3.1</b> An example</a></li>
+<li class="chapter" data-level="3.2" data-path="applying-the-central-limit-theorem.html"><a href="applying-the-central-limit-theorem.html#central-limit-theorem"><i class="fa fa-check"></i><b>3.2</b> Central Limit Theorem</a></li>
+<li class="chapter" data-level="3.3" data-path="applying-the-central-limit-theorem.html"><a href="applying-the-central-limit-theorem.html#samples"><i class="fa fa-check"></i><b>3.3</b> Samples</a></li>
+<li class="chapter" data-level="3.4" data-path="applying-the-central-limit-theorem.html"><a href="applying-the-central-limit-theorem.html#hypothesis-testing"><i class="fa fa-check"></i><b>3.4</b> Hypothesis Testing</a></li>
+<li class="chapter" data-level="3.5" data-path="applying-the-central-limit-theorem.html"><a href="applying-the-central-limit-theorem.html#the-flaw-in-the-z-test"><i class="fa fa-check"></i><b>3.5</b> The flaw in the z-test</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bootstrapping.html"><a href="bootstrapping.html"><i class="fa fa-check"></i><b>4</b> Bootstrapping</a></li>
+<li class="chapter" data-level="5" data-path="permutation-testing.html"><a href="permutation-testing.html"><i class="fa fa-check"></i><b>5</b> Permutation Testing</a></li>
+<li class="chapter" data-level="6" data-path="multiple-regression-as-you-never-seen-it-before-or-the-case-for-the-importance-of-the-assumption-of-independence-.html"><a href="multiple-regression-as-you-never-seen-it-before-or-the-case-for-the-importance-of-the-assumption-of-independence-.html"><i class="fa fa-check"></i><b>6</b> Multiple regression as you never seen it before. Or the case for the importance of the assumption of independence.</a><ul>
+<li class="chapter" data-level="6.1" data-path="multiple-regression-as-you-never-seen-it-before-or-the-case-for-the-importance-of-the-assumption-of-independence-.html"><a href="multiple-regression-as-you-never-seen-it-before-or-the-case-for-the-importance-of-the-assumption-of-independence-.html#house-price-prediction"><i class="fa fa-check"></i><b>6.1</b> House price prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="how-can-we-do-data-analysis-when-theres-no-ground-truth.html"><a href="how-can-we-do-data-analysis-when-theres-no-ground-truth.html"><i class="fa fa-check"></i><b>7</b> How can we do data analysis when there’’s no “ground truth”?</a></li>
+<li class="chapter" data-level="8" data-path="the-beauty-of-programming-via-probability-distributions-and-estimating-them.html"><a href="the-beauty-of-programming-via-probability-distributions-and-estimating-them.html"><i class="fa fa-check"></i><b>8</b> The beauty of programming via probability distributions (and estimating them)</a></li>
+<li class="chapter" data-level="9" data-path="finishingsubmitting-a-paper-in-the-lab.html"><a href="finishingsubmitting-a-paper-in-the-lab.html"><i class="fa fa-check"></i><b>9</b> Finishing/submitting a paper in the lab</a></li>
+<li class="chapter" data-level="10" data-path="understanding-data-overfitting-and-p-values.html"><a href="understanding-data-overfitting-and-p-values.html"><i class="fa fa-check"></i><b>10</b> Understanding data, overfitting, and p values</a></li>
+<li class="chapter" data-level="11" data-path="interpreting-results-humility-pays-off.html"><a href="interpreting-results-humility-pays-off.html"><i class="fa fa-check"></i><b>11</b> Interpreting results: humility pays off</a></li>
+<li class="chapter" data-level="12" data-path="citing-your-methods-in-your-research-reports-and-publications.html"><a href="citing-your-methods-in-your-research-reports-and-publications.html"><i class="fa fa-check"></i><b>12</b> Citing your methods in your research reports (and publications)</a></li>
+<li class="chapter" data-level="13" data-path="within-and-between-participant-variability.html"><a href="within-and-between-participant-variability.html"><i class="fa fa-check"></i><b>13</b> Within- and between-participant variability</a></li>
+<li class="chapter" data-level="14" data-path="between-participant-estimates.html"><a href="between-participant-estimates.html"><i class="fa fa-check"></i><b>14</b> Between-participant estimates</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="between-participant-estimates" class="section level1">
+<h1><span class="header-section-number">Chapter 14</span> Between-participant estimates</h1>
+<p>In Chapter 13 (Withing- and between-participant variability), we discussed the follwing idea: You might have a much better way to estimate differences, so forget about <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> individually and think of <span class="math inline">\(A-B\)</span>.</p>
+<p>But does this mean that you should not estimate <span class="math inline">\(A\)</span> and/or <span class="math inline">\(B\)</span>? The answer to this quesion is entirely determined by your subject matter, as it might be extremely important to estimate them individually. All we said in Chapter 13 is that you have a <strong>much better</strong> chance to estimate <span class="math inline">\(A-B\)</span> in some scenarios.</p>
+<p>The field of statistics focuses on two main interrelated goals: (1) Estimating properties from data; and (2) Understanding the distributional properties of the estimates. Goal (2) usually takes place in the context of attempting to draw statistical inferences, but it needn’t be.</p>
+<p>So if understading properties about <span class="math inline">\(A\)</span> is what your research calls for, go ahead and estimate it. But when you estimate it, never forget (2) even if your focus at that point is <strong>not</strong> on making inferences. In other words, estimate some property of <span class="math inline">\(A\)</span>, say <span class="math inline">\(\bar{x}_A\)</span>, but don’t stop there. Study how <span class="math inline">\(A\)</span> is distributed.</p>
+<p>Let’s work through a simple example. Consider that your goal is to estimate the <span style="color:magenta">representative</span> value of <span class="math inline">\(A\)</span> (something like the mean, median, or mode). Here, <span class="math inline">\(A\)</span> is a strange object of interest: “the neural trajectory in time when someone is under threat in a given experiment”. The goal of using this unusual object is to illustrate that the principle applies very generally, no matter what property you want to understand from your data.</p>
+<p>When you estimate the representative value of <span class="math inline">\(A\)</span>, that’s a single value (or object in our case): that’s what statisticians call a <strong>point estimate</strong>. The problem is that while it might have great pratical and theoretical properties, the representative <span class="math inline">\(A\)</span> is just that, a single thing. So you need to characterize how <span class="math inline">\(A\)</span> is distributed.</p>
+<p>When you look at the <span style="color:magenta">distribution</span> of your estimate of <span class="math inline">\(A\)</span>, you might find that it’s so variable as to defy utility (Figure 7.1).</p>
+<div class="figure"><span id="fig:unnamed-chunk-4"></span>
+<img src="images/representative-trajectory-and-variability.png" alt="Estimates of a property of the data your interested in: in this case the trajectory shown in (A). (B) Based on the estimator that you're using, the individual-level trajectories are incredibly variable. The (putatively) representative trajectory is clearly a very poor indicator of your object of study." width="75%" />
+<p class="caption">
+Figure 14.1: Estimates of a property of the data your interested in: in this case the trajectory shown in (A). (B) Based on the estimator that you’re using, the individual-level trajectories are incredibly variable. The (putatively) representative trajectory is clearly a very poor indicator of your object of study.
+</p>
+</div>
+<p>In other words, <strong>based on data at hand, you do not have a good way of understanding</strong> what <span class="math inline">\(A\)</span> is really about. But this is something that you should report, not hide.</p>
+<p>Why? Because that becomes a problem for a future study: designing a study in which <span class="math inline">\(A\)</span> can be better understood. Based on your investigation, although you can’t estimate it well, you might gain multiple insights into doing this in the future. So this is very important. Your investigations are as much about “now” as the future of your research.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="within-and-between-participant-variability.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["Newbook.pdf", "Newbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
