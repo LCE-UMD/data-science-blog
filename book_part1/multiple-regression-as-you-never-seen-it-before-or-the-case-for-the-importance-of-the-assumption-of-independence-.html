@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 2 Multiple regression as you never seen it before. Or the case for the importance of the assumption of independence. | A Minimal Book Example</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 2 Multiple regression as you never seen it before. Or the case for the importance of the assumption of independence. | A Minimal Book Example" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Multiple regression as you never seen it before. Or the case for the importance of the assumption of independence. | A Minimal Book Example" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Yihui Xie">
+
+
+<meta name="date" content="2019-03-28">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="how-can-we-do-data-analysis-when-theres-no-ground-truth.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2" data-path="multiple-regression-as-you-never-seen-it-before-or-the-case-for-the-importance-of-the-assumption-of-independence-.html"><a href="multiple-regression-as-you-never-seen-it-before-or-the-case-for-the-importance-of-the-assumption-of-independence-.html"><i class="fa fa-check"></i><b>2</b> Multiple regression as you never seen it before. Or the case for the importance of the assumption of independence.</a><ul>
+<li class="chapter" data-level="2.1" data-path="multiple-regression-as-you-never-seen-it-before-or-the-case-for-the-importance-of-the-assumption-of-independence-.html"><a href="multiple-regression-as-you-never-seen-it-before-or-the-case-for-the-importance-of-the-assumption-of-independence-.html#house-price-prediction"><i class="fa fa-check"></i><b>2.1</b> House price prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="how-can-we-do-data-analysis-when-theres-no-ground-truth.html"><a href="how-can-we-do-data-analysis-when-theres-no-ground-truth.html"><i class="fa fa-check"></i><b>3</b> How can we do data analysis when there’’s no “ground truth”?</a></li>
+<li class="chapter" data-level="4" data-path="finishingsubmitting-a-paper-in-the-lab.html"><a href="finishingsubmitting-a-paper-in-the-lab.html"><i class="fa fa-check"></i><b>4</b> Finishing/submitting a paper in the lab</a></li>
+<li class="chapter" data-level="5" data-path="understanding-data-overfitting-and-p-values.html"><a href="understanding-data-overfitting-and-p-values.html"><i class="fa fa-check"></i><b>5</b> Understanding data, overfitting, and p values</a></li>
+<li class="chapter" data-level="6" data-path="interpreting-results-humility-pays-off.html"><a href="interpreting-results-humility-pays-off.html"><i class="fa fa-check"></i><b>6</b> Interpreting results: humility pays off</a></li>
+<li class="chapter" data-level="7" data-path="citing-your-methods-in-your-research-reports-and-publications.html"><a href="citing-your-methods-in-your-research-reports-and-publications.html"><i class="fa fa-check"></i><b>7</b> Citing your methods in your research reports (and publications)</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="multiple-regression-as-you-never-seen-it-before.-or-the-case-for-the-importance-of-the-assumption-of-independence." class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Multiple regression as you never seen it before. Or the case for the importance of the assumption of independence.</h1>
+<div id="house-price-prediction" class="section level2">
+<h2><span class="header-section-number">2.1</span> House price prediction</h2>
+<p>Imagine the following scenario, you work for a real estate agency and new house has just been made available on the market, how would you go about naming the price for that house? Luckily in this scenario you are not just any other real estate, but a statistics loving, extra diligent one. As such you have saved on record all the information about houses sold in your area for the past <span class="math inline">\(10\)</span> years. In your archives you have recorded the size of each house (in square feet), the number of bedrooms it has, the average income in the respective neighborhood, a subjective rating of how appealing the house is, the year in which it was sold, and how much it was sold for. How can you use all that information from your archives to best predict the value of the new house?</p>
+<table style="width:100%;">
+<colgroup>
+<col width="8%" />
+<col width="11%" />
+<col width="27%" />
+<col width="7%" />
+<col width="5%" />
+<col width="13%" />
+<col width="2%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Price(Y)</th>
+<th># of bedrooms</th>
+<th>Average income of the neighborhood</th>
+<th>Rating</th>
+<th>Year</th>
+<th>Area/sqf</th>
+<th>…</th>
+<th>House tax rate of this region</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>190,239</td>
+<td>4</td>
+<td>40,000</td>
+<td>2.7</td>
+<td>2012</td>
+<td>2,642</td>
+<td>…</td>
+<td>1.08%</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>230,232</td>
+<td>3</td>
+<td>63,298</td>
+<td>4.8</td>
+<td>2016</td>
+<td>1,324</td>
+<td>…</td>
+<td>2.01%</td>
+</tr>
+</tbody>
+</table>
+<p>This problem could be mathematically formulated as following problem:</p>
+<blockquote>
+<p>Given a set of variables <span class="math inline">\(X = (x_1, x_2, \cdots , x_n)\)</span> and another variable <span class="math inline">\(Y\)</span>, try to find the “relationship” between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+</blockquote>
+<p>In the house prediction problem above, <span class="math inline">\(x1\)</span> could be total number of bedrooms, <span class="math inline">\(x2\)</span> could be the average income of the neighborhood, xn could be house tax rate of this region and <span class="math inline">\(Y\)</span> could be the deal price at a certain year. Since we want to predict the price of a house as precise as possible, the “relationship” here could be simply interpreted as to find out the smallest difference between the predicted price and the deal price. So we can further formularized the above problem as:</p>
+<blockquote>
+<p>Given a set of variables <span class="math inline">\(X = [x1, x2, \cdots , xn]\)</span> and another variable <span class="math inline">\(Y\)</span>, try to find a function <span class="math inline">\(f:\mathcal{R}^n \rightarrow \mathcal{R}\)</span> s.t “difference” between <span class="math inline">\(f(X)\)</span> and <span class="math inline">\(Y\)</span> is minimized.</p>
+</blockquote>
+<p>Here, a problem might arise, how can one choose a proper function <span class="math inline">\(f(X)\)</span> ? A naive thought is to simply assume a linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, i.e.</p>
+<p><span class="math display">\[ f(X)=\sum{}{}\alpha_i x_i+ \alpha_0 \]</span> This linear assumption, even though simple enough, turns out to be very powerful and effective in solving many problems. Given this assumption, now the problem becomes:</p>
+<blockquote>
+<p>Given a set of variables <span class="math inline">\(X = [x1, x2, \cdots , xn]\)</span> and another variable <span class="math inline">\(Y\)</span>, use data collected for variable <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> to determine a set of values of coefficients <span class="math inline">\(\alpha_0, \alpha_1, \cdots , \alpha_n\)</span> s.t “difference” between <span class="math inline">\(f(X)\)</span> and <span class="math inline">\(Y\)</span> is minimized.</p>
+</blockquote>
+<p>The problem we derived from the perspective of optimization is categorized as least-squares problem:</p>
+<p><span class="math display">\[\underset{x}{min}\quad f_0(x)=\Vert Ax- b\Vert_2^2\]</span></p>
+<p>It could be solved analytically with a solution of <span class="math inline">\(x= (A^{\top}A)^{-1} A^{\top} b\)</span>. Also there are many efficient algorithms available to avoid the expensive computation of inverse of matrix.</p>
+<p>Most people stop their analysis here when they happily got their final results: a set of coefficient values. Some might even use software packages as some magical black box that could produce a set of coefficient that could linearly fit the data.</p>
+<p>Known as multiple regression, statisticians would often use the aforementioned analysis to learn about the relationship between several independent or predictor variables and a dependent or criterion variable. So, if we go back to our house price prediction example. The relationships between the different predicting variables and the criterion can be described like this:</p>
+<p><span class="math display">\[Price(Y) = 4.7 * \text{# of bedrooms} + 0.27* \text{Average income of the neighborhood} + 0.46 * \text{Rating}\\ + 0.2 * \text{Year} + 0.1 * \text{Area} + 0.24 * \text{House tax rate of this region}\]</span></p>
+<p>What this equation is telling us is that when all other variables are being held as consents, every <span class="math inline">\(4.7\)</span> rooms added to the house results in a one-unit change in price of the house; let us say an added <span class="math inline">\(100,000\)</span> to the house total price.</p>
+<p>Seeing this equation, our agent might reach the conclusion that due to the large coefficient the factor most significantly effecting the house prices in the area is the number of rooms that they have (when compared to the tiny <span class="math inline">\(0.1\)</span> coefficient of the house area for example). The effect of number of room is so central that for an increase of <span class="math inline">\(4.7\)</span> rooms drives the price of the house by another <span class="math inline">\(100,000\$\)</span>.</p>
+<p>This conclusion would be very wrong, and for a couple of reasons, we will call them the problems of collinearity and scaling. A house’s price is mainly determined by number of bedrooms but not determined by the house area? Who will design a house with many bedrooms but small area? In fact, how can the numbers of room grow without it affecting the area of the house? Can infect one factor in our equation change without it affecting other factors?</p>
+<p>Of the two problems, that of scaling is simpler, and easier to resolve. A factor’s coefficient is a function of that factor’s range, so for large ranged variables the coefficient before it is likely to get a small value. That small value however, does NOT indicate that it has less impact in determining the value of <span class="math inline">\(Y\)</span>. To avoid this problem, most data scientists tend to normalize data before conducting the regression analysis so that values of variable are in similar range.</p>
+<p>The other problem, collinearity, refers to a situation when one of our predictor variables can be almost entirely predicted by one or a few of the other predicting variables. In our example, it is easy to see how, in many cases, the number of room it has could predict a house’s area. Similarly, if that region house taxation were based on its square feet size, the variable area would entirely predict that of tax. When two or more variables are highly correlated, they are in affect explaining the same phenomenon, and thus redundant. It is therefore a good practice to test for collinearity between the variables prior to designing the regression model.</p>
+<p>However, even if variables are not entirely collinear, that does not mean we can treat them as orthogonal. If we go back to the verbal explanation of the regression equation, it is important to pay careful attention to the following part “when all other variables are being held as consents…” it means that we can refer to the unique effect a single variable if, and only if, changing that variable has no effect on the other variables. If it does, the equation should be treated as a whole.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="how-can-we-do-data-analysis-when-theres-no-ground-truth.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["pessoa_blog_part1.pdf", "pessoa_blog_part1.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

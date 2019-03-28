@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 4 Understanding data, overfitting, and p values | Part I: Data Analysis</title>
+  <meta name="description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 4 Understanding data, overfitting, and p values | Part I: Data Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Understanding data, overfitting, and p values | Part I: Data Analysis" />
+  
+  <meta name="twitter:description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="finishingsubmitting-a-paper-in-the-lab.html">
+<link rel="next" href="interpreting-results-humility-pays-off.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="../index.html"><img src="images/LCE_Logo2_TEXT.png" width="50%" height="50%"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Multiple regression as you never seen it before. Or the case for the importance of the assumption of independence.</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#house-price-prediction"><i class="fa fa-check"></i><b>1.1</b> House price prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="how-can-we-do-data-analysis-when-theres-no-ground-truth.html"><a href="how-can-we-do-data-analysis-when-theres-no-ground-truth.html"><i class="fa fa-check"></i><b>2</b> How can we do data analysis when there’’s no “ground truth”?</a></li>
+<li class="chapter" data-level="3" data-path="finishingsubmitting-a-paper-in-the-lab.html"><a href="finishingsubmitting-a-paper-in-the-lab.html"><i class="fa fa-check"></i><b>3</b> Finishing/submitting a paper in the lab</a></li>
+<li class="chapter" data-level="4" data-path="understanding-data-overfitting-and-p-values.html"><a href="understanding-data-overfitting-and-p-values.html"><i class="fa fa-check"></i><b>4</b> Understanding data, overfitting, and p values</a></li>
+<li class="chapter" data-level="5" data-path="interpreting-results-humility-pays-off.html"><a href="interpreting-results-humility-pays-off.html"><i class="fa fa-check"></i><b>5</b> Interpreting results: humility pays off</a></li>
+<li class="chapter" data-level="6" data-path="citing-your-methods-in-your-research-reports-and-publications.html"><a href="citing-your-methods-in-your-research-reports-and-publications.html"><i class="fa fa-check"></i><b>6</b> Citing your methods in your research reports (and publications)</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Part I: Data Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="understanding-data-overfitting-and-p-values" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Understanding data, overfitting, and p values</h1>
+<p><code>conceptual</code> <code>statistics</code> <code>machine learning</code> <code>cross validation</code></p>
+<p>If you’re an engineer you might not be very familar with statistical inference and p values and the point of it all might be a little mysterious. At the same time, you might be very familiar with the issue of <strong>overfitting data</strong> and using something like training and test sets, cross-validation, and other schemes to investigate data. A neuroscientist will be less familar with those instead. But it turns out that they are closely related.</p>
+<p>This post will be short and elaborated later (hopefully). Suppose you’re an engineer and plot the data and get some 2-D data scatter plot. Then you decide to fit the data with a linear model (just fitting a line). But you also try a quadratic fit, a cubic fit, and even some fancy new spline method just published. It makes sense to try several methods because you don’t know the data well (you’re just studying it now). You then summarize how <strong>all of the methods</strong> behave, how well they fit the data.</p>
+<p><strong>The paradox is that you can’t do that in an experimental science situation</strong>. You have to decide <strong>in advance</strong> which method you want to use and <strong>only then</strong> apply it to the data. But why? Isn’t this too limiting?</p>
+<p>The reason (this needs to be short) is that when you analyze a new dataset you usually don’t have so much data that you can try a lot of methods, pick what you like most, and then apply it to the data that you really care about. You don’t have data available like that. Because of this, if you try multiple methods you will be reporting what works best for your <strong>specific dataset</strong> which may <strong>generalize very poorly</strong> to new datasets. And what you want in general is to be able to generalize.</p>
+<p>In the case of fit example above, perhaps the spline fit explains most of the variance in the data. But then it could be really overfitting your data and generalize very poorly to new datasets. You could find this out by testing it in a new dataset, that’s easy enough. The problem is that you don’t have data to test it with, so you’re stuck. Data are so difficult to acquire in general that this approach is usually not possible. (HCP data and other large datasets are helpful in this respect, of course.)</p>
+<p>Bottom line: you have to find some clever way to choose <strong>all your analyses in advance</strong>. Maybe you can use similar data, maybe simulated data, or just parsimony – the simplest model possible, or the fewest assumptions.</p>
+<p>To conclude, data analysis in an experimental setting is <strong>not</strong> a report of what happens to your data when you apply the set of most common types of fits/analyses available. It’s what happens when you apply <strong>one type of analysis</strong> to <strong>one dataset</strong> that is supposed to be <strong>representative of data in general</strong>.</p>
+<p><u>Note 1</u>: Of course, it’s always possible to perform <strong>exploratory</strong> data analysis in the context of methodological studies, but that’s different.</p>
+<p><u>Note 2</u>: I never got to how this is related to <em>p values</em> and statistical inference. As it’s commonly said, that’s left as an exercise for the reader…</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="finishingsubmitting-a-paper-in-the-lab.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="interpreting-results-humility-pays-off.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["pessoa_blog_part1.pdf", "pessoa_blog_part1.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

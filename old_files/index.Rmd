@@ -1,0 +1,17 @@
+--- 
+title: "Data Science"
+author: "Luiz Pessoa"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: https://github.com/AdnanRgithub/AdnanRgithub.github.io
+description: "This is a website where Dr. Luiz Pessoa's will teach concepts in Data Science, Statistics, and fMRI Research."
+---
+
+# Book Purpose
+
+The purpose of this book is to teach concepts in Data Science, Statistics, and fMRI Research.

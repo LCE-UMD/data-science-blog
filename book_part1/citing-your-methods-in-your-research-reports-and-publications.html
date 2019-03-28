@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 6 Citing your methods in your research reports (and publications) | Part I: Data Analysis</title>
+  <meta name="description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 6 Citing your methods in your research reports (and publications) | Part I: Data Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Citing your methods in your research reports (and publications) | Part I: Data Analysis" />
+  
+  <meta name="twitter:description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="interpreting-results-humility-pays-off.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="../index.html"><img src="images/LCE_Logo2_TEXT.png" width="50%" height="50%"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Multiple regression as you never seen it before. Or the case for the importance of the assumption of independence.</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#house-price-prediction"><i class="fa fa-check"></i><b>1.1</b> House price prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="how-can-we-do-data-analysis-when-theres-no-ground-truth.html"><a href="how-can-we-do-data-analysis-when-theres-no-ground-truth.html"><i class="fa fa-check"></i><b>2</b> How can we do data analysis when there’’s no “ground truth”?</a></li>
+<li class="chapter" data-level="3" data-path="finishingsubmitting-a-paper-in-the-lab.html"><a href="finishingsubmitting-a-paper-in-the-lab.html"><i class="fa fa-check"></i><b>3</b> Finishing/submitting a paper in the lab</a></li>
+<li class="chapter" data-level="4" data-path="understanding-data-overfitting-and-p-values.html"><a href="understanding-data-overfitting-and-p-values.html"><i class="fa fa-check"></i><b>4</b> Understanding data, overfitting, and p values</a></li>
+<li class="chapter" data-level="5" data-path="interpreting-results-humility-pays-off.html"><a href="interpreting-results-humility-pays-off.html"><i class="fa fa-check"></i><b>5</b> Interpreting results: humility pays off</a></li>
+<li class="chapter" data-level="6" data-path="citing-your-methods-in-your-research-reports-and-publications.html"><a href="citing-your-methods-in-your-research-reports-and-publications.html"><i class="fa fa-check"></i><b>6</b> Citing your methods in your research reports (and publications)</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Part I: Data Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="citing-your-methods-in-your-research-reports-and-publications" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Citing your methods in your research reports (and publications)</h1>
+<p><code>citation</code> <code>algorithms</code> <code>research</code></p>
+<p>Knowledge is incredibly distributed, and we all use methods that are based on what other people developed.</p>
+<p><strong>Knowing where the methods come from and citing them properly is essential for research.</strong></p>
+<p>For example, suppose you use a method from graph theory (but it could be anything) to characterize correlations from a series of ROIs. One measure that is used is called <strong>global efficiency</strong> and relates to the “efficiency with which information can flow within a cluster of nodes”. Think of how gossip spreads really fast in some clusters of people and maybe less fast in some other types of organization; or how diseases spread, etc.</p>
+<p>If you use a measure like <strong>global efficiency</strong> you are not going to implement that from scratch, you’re going to find it somewhere else. So what exactly are you using? Think if it in terms of the following possibilites:</p>
+<ol style="list-style-type: decimal">
+<li>I’m using global efficiency.</li>
+<li>I’m using global efficiency as defined in the Toolbox “The greatest toolbox available”.</li>
+<li>I’m using global efficiency , weighted version, as defined in the Toolbox “The greatest toolbox available”.</li>
+<li>I’m using the weithed global efficiency method developed here: <em>Latora, V., &amp; Marchiori, M. (2001). Efficient behavior of small-word networks. Physical Review Letters, 87(19), 198701.</em> as <u>implemented</u> in the Toolbox “The greatest toolbox available”.</li>
+</ol>
+<p>The way that you should <strong>think</strong> about this is in terms of <span class="math inline">\(\#4\)</span> above. The difference between <span class="math inline">\(\#3\)</span> and <span class="math inline">\(\#4\)</span> is not important here, but if you know a little about these methods, you should be able to see what I mean.</p>
+<p>Simply put, doing it this way makes you a better researcher. And when you develop, yourself, a new method that starts being applied by others, you will be thankful if they do the same.</p>
+<p>And no, you can’t just cite Wikipedia…</p>
+<p><strong>Note</strong>: To be sure, things can get a little more convoluted sometimes and giving proper credit gets muddied. Do you need to state that “The greatest toolbox available” is implemented in Stan? Or more extremely, do you need to cite Newton if you use calculus? Or Leibniz because the calculus notation that you use was his idea? You get the point. But when in doubt just cite <strong>more</strong>, not less.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="interpreting-results-humility-pays-off.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["pessoa_blog_part1.pdf", "pessoa_blog_part1.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

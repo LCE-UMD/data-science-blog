@@ -1,0 +1,20 @@
+---
+title: "Permutation Testing"
+output: html_document
+---
+
+# Permutation Testing
+
+Similar to the standard *independent* or *unpaired samples* *t*-test, *Permutation tests* can be used to perform *hypothesis testing* to test whether the observed mean difference between two groups is statistically significant or not.
+
+For example, our research question is to test whether the salaries of male and female employees working at a big multinational company differ? For this, say we collected salary information from a random sample of $30$ male and $30$ female employees (total of $60$ salaries). If we would like to use the permutation testing to test whether the salaries of male and female employees are statistically different, the following steps are involved:
+
+1. Calculate the mean salary difference between male and female sample groups. This is the sample mean difference.
+2. Build the permutation distribution for the mean salary difference based on large number of permutation resamples generated *without replacement*. In order to perform hypothesis testing, we should resample in a manner that is consistent with the *null hypothesis* (and with the study design). In this case, null hypothesis is that there is no salary difference between male and female populations which implies that gender doesn’t play a role in employee’s salaries. So, to create a permutation resample, we randomly assign $30$ out of $60$ salaries to male group and remaining $30$ salaries to female group. Then, we calculate the mean salary difference between two groups for this permutation resample. We repeat this resampling procedure *without replacement* thousands of times and calculate mean salary difference for each permutation resample. Finally, plotting the distribution of the mean salary difference of all permutation resamples gives us the sampling distribution under the null hypothesis.
+3. Calculate the *p*-value by finding the observed sample mean difference on the permutation distribution. In other words, find the proportion of samples in the permutation distribution that are at or more extreme than the sample mean difference calculated in step $1$. If the observed *p*-value is low (i.e., if the sample mean difference fell on tails of the permutation distribution), then we can infer that the observed mean salary difference is less likely happened by chance and hence conclude that the population means of male and female employee salaries are statistically different.
+
+Compared to the standard *t* test, permutation tests are accurate even when the population distributions are not normal. However, under the null hypothesis, permutation tests require the two populations to have identical distributions with same means, same shapes and same variability <span style="color:red">(how can we test this?)</span>.
+
+***
+
+Posted by Srikanth Padmala.
