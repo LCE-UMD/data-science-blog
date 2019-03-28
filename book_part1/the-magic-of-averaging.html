@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 7 The magic of averaging | Part I: Data Analysis</title>
+  <meta name="description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 7 The magic of averaging | Part I: Data Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 The magic of averaging | Part I: Data Analysis" />
+  
+  <meta name="twitter:description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="citing-your-methods-in-your-research-reports-and-publications.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="../index.html"><img src="images/LCE_Logo2_TEXT.png" width="50%" height="50%"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Multiple regression as you never seen it before. Or the case for the importance of the assumption of independence.</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#house-price-prediction"><i class="fa fa-check"></i><b>1.1</b> House price prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="how-can-we-do-data-analysis-when-theres-no-ground-truth.html"><a href="how-can-we-do-data-analysis-when-theres-no-ground-truth.html"><i class="fa fa-check"></i><b>2</b> How can we do data analysis when there’’s no “ground truth”?</a></li>
+<li class="chapter" data-level="3" data-path="finishingsubmitting-a-paper-in-the-lab.html"><a href="finishingsubmitting-a-paper-in-the-lab.html"><i class="fa fa-check"></i><b>3</b> Finishing/submitting a paper in the lab</a></li>
+<li class="chapter" data-level="4" data-path="understanding-data-overfitting-and-p-values.html"><a href="understanding-data-overfitting-and-p-values.html"><i class="fa fa-check"></i><b>4</b> Understanding data, overfitting, and p values</a></li>
+<li class="chapter" data-level="5" data-path="interpreting-results-humility-pays-off.html"><a href="interpreting-results-humility-pays-off.html"><i class="fa fa-check"></i><b>5</b> Interpreting results: humility pays off</a></li>
+<li class="chapter" data-level="6" data-path="citing-your-methods-in-your-research-reports-and-publications.html"><a href="citing-your-methods-in-your-research-reports-and-publications.html"><i class="fa fa-check"></i><b>6</b> Citing your methods in your research reports (and publications)</a></li>
+<li class="chapter" data-level="7" data-path="the-magic-of-averaging.html"><a href="the-magic-of-averaging.html"><i class="fa fa-check"></i><b>7</b> The magic of averaging</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Part I: Data Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="the-magic-of-averaging" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> The magic of averaging</h1>
+<p><code>central limit theorem</code> <code>signal-to-noise ratio</code> <code>estimation</code></p>
+<p>[** Very brief post about averaging]</p>
+<p>In biological systems (and many others) we often deal with very noisy data. When first handling this type of data people are often confused with the following fact: <u>Data from a single trial might (appear to) be “meaningless”</u>. The same thing can be even said for data for a single participant – even when averaging trials within participant. For example, we rarely if ever will look at an individual’s fMRI data; it’s just too noisy (N.B.: this might appear contradict another post but it doesn’t.).</p>
+<p>Consider the figure (outside of this post) with fMRI responses to a brief stimulus. These are shown for two subjects (separately), for individual trials (labeled “<span class="math inline">\(1\)</span>”), for averages of <span class="math inline">\(4\)</span> trials (“<span class="math inline">\(4\)</span>”), and so on. The single trials are a complete mess and look like noise! If you looked at one, or a few, you might think that the situation is hopeless.</p>
+<p>But with the beauty of the <strong>central limit theorem</strong> and the <strong>law of large numbers</strong> we see that the underlying shape is there with as few as <span class="math inline">\(16\)</span> trials, and clearly with <span class="math inline">\(64\)</span>. And the standard deviation at the peak decreases with the <span class="math inline">\(sqrt(N)\)</span> trials, so there are diminishing returns after some point.</p>
+<p><u>Conclusion: don’t be afraid when your data looks messy around the mean…</u></p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="citing-your-methods-in-your-research-reports-and-publications.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["pessoa_blog_part1.pdf", "pessoa_blog_part1.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
