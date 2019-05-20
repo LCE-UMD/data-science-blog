@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 3 Brief primer on fMRI analysis of task experimental designs (for engineers and others familiar with the mathematical background) | Part III: fMRI Data Analysis</title>
+  <meta name="description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 3 Brief primer on fMRI analysis of task experimental designs (for engineers and others familiar with the mathematical background) | Part III: fMRI Data Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Brief primer on fMRI analysis of task experimental designs (for engineers and others familiar with the mathematical background) | Part III: fMRI Data Analysis" />
+  
+  <meta name="twitter:description" content="This is a website where Dr. Luiz Pessoa’s will teach concepts in Data Science, Statistics, and fMRI Research." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="between-participant-estimates.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="../index.html"><img src="images/LCE_Logo2_TEXT.png" width="50%" height="50%"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Within- and between-participant variability</a></li>
+<li class="chapter" data-level="2" data-path="between-participant-estimates.html"><a href="between-participant-estimates.html"><i class="fa fa-check"></i><b>2</b> Between-participant estimates</a></li>
+<li class="chapter" data-level="3" data-path="brief-primer-on-fmri-analysis-of-task-experimental-designs-for-engineers-and-others-familiar-with-the-mathematical-background.html"><a href="brief-primer-on-fmri-analysis-of-task-experimental-designs-for-engineers-and-others-familiar-with-the-mathematical-background.html"><i class="fa fa-check"></i><b>3</b> Brief primer on fMRI analysis of task experimental designs (for engineers and others familiar with the mathematical background)</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Part III: fMRI Data Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="brief-primer-on-fmri-analysis-of-task-experimental-designs-for-engineers-and-others-familiar-with-the-mathematical-background" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Brief primer on fMRI analysis of task experimental designs (for engineers and others familiar with the mathematical background)</h1>
+<p>In what follows, the entire description refers to the analysis (1) at a single voxel time series from (2) a single participant. This is the basic building block from which activation maps for groups of participants are built.</p>
+<p>The defining property of an fMRI study employing a task is that there are well-defined periods during which experimental conditions are “On”. For example, consider a task involving viewing visual stimuli, listening to some sounds, and producing motor movements. Call these conditions <span class="math inline">\(C_1\)</span>, <span class="math inline">\(C_2\)</span>, and <span class="math inline">\(C_3\)</span>. What precisely defines a particular experiment is given by when and for how long each condition takes place during data acquisition.</p>
+<p>We often call a “run” an uninterrupted acquisition of fMRI data. Therefore, the following “boxcars” (timing diagram) define a specific experiment. They define On and Off periods for each of the experimental conditions.</p>
+<div class="figure"><span id="fig:unnamed-chunk-3"></span>
+<img src="images/timing_diagram.png" alt="Timing diagram for conditions $C_1$, $C_2$, and $C_3$ of a specific experiment. Each condition is thus represented by a vector containing $0$ or $1$ entries and with dimension 1 x t." width="75%" />
+<p class="caption">
+Figure 3.1: Timing diagram for conditions <span class="math inline">\(C_1\)</span>, <span class="math inline">\(C_2\)</span>, and <span class="math inline">\(C_3\)</span> of a specific experiment. Each condition is thus represented by a vector containing <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span> entries and with dimension 1 x t.
+</p>
+</div>
+<p>FMRI data analysis is a simple application of multiple linear regression. <span class="math inline">\(Y_t\)</span> is the time series data for a given voxel, the <span class="math inline">\(X_i\)</span> are <span class="math inline">\(p-1\)</span> predictors (also called explanatory variables, or regressors) defined for every time point <span class="math inline">\(t\)</span>, and <span class="math inline">\(e\)</span> is the error term:</p>
+<p><span class="math inline">\(\mathbf{Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots +\beta_{p-1}X_{p-1}+\epsilon}\textrm(1)\)</span></p>
+<p>or in matrix form:</p>
+<p><span class="math inline">\(\mathbf{Y=X\beta+\epsilon}\)</span></p>
+<p>with dimensions as follows: <span class="math inline">\(\mathbf{Y}:t\times 1; \mathbf{X}:t\times(p-1); \beta: (p-1)\times 1; \epsilon:n\times t\)</span>. The matrix <span class="math inline">\(\mathbf{X}\)</span> is often called the <em>design matrix</em> because it summarizes the experimental design. Note that it is a matrix with the first column being composed of the column vector <span class="math inline">\(\mathbf{1}\)</span> (this is obtained trivially because <span class="math inline">\(\mathbf{X_0}\)</span> is ommitted for convenience and is the column vector in question).</p>
+<p>It can be easily shown that the estimates <span class="math inline">\(\beta\)</span> are given by</p>
+<p><span class="math inline">\(\beta=\mathbf{(X&#39;X)^{-1}X&#39;Y}\)</span> where <span class="math inline">\(\mathbf{X&#39;}\)</span> is the transpose of <span class="math inline">\(\mathbf{X}\)</span>.</p>
+<p>Thus, based on the data <span class="math inline">\(Y_t\)</span> at each voxel separately, the goal of multiple regression is to fit a hyperplane that minimizes the residual <span class="math inline">\((Y - \hat{Y})^2\)</span>, where <span class="math inline">\(\hat{Y}\)</span> is the predicted response. The predicted response is simply obtained by plugging in the regression coefficients estimated by, say, ordinary least squares.</p>
+<p>What does this mean? Your explanatory variables indicate when particular experimental conditions occur, so they define an idealized response that is “matched” to the observed data <span class="math inline">\(Y_t\)</span>. If your voxel turns On and Off as predicted by condition <span class="math inline">\(C_i\)</span>, then your regression coefficient <span class="math inline">\(\beta_i\)</span> will reflect that.</p>
+<p>Note that regressors directly based on the <span class="math inline">\(C_i\)</span> vectors would be unrealistic because they would assume that a voxel’s response switches from Off to On (and On to Off) instantaneously. Therefore, the timing vector defined by <span class="math inline">\(C_i\)</span> needs to be passed through a hemodynamic filter that takes into account the temporal properties of the BOLD signal. In other words, we need to convolve <span class="math inline">\(C_i\)</span> with the hemodynamic impulse response function, which is something that has been well characterized (therefore is considered known). Accordingly, the idealized response (regressor) <span class="math inline">\(X_i\)</span> is obtained by convolving <span class="math inline">\(C_i\)</span> with the hemodynamic filter: <span class="math inline">\(X_i = C_i * \textrm{HRF}\)</span>, where <span class="math inline">\(*\)</span> is the convolution operator and <span class="math inline">\(\textrm{HRF}\)</span> is the hemodynamic filter.</p>
+<p>Conceptually, one should think that the goal is to estimate regression coefficients <span class="math inline">\(\beta_i\)</span> based on how they modulate the regressors such that the overall fit is optimized in the least-squares sense.</p>
+<div class="figure"><span id="fig:unnamed-chunk-4"></span>
+<img src="images/boxcar-regressor-data.png" alt="The timing diagram specifies the condition $C_i$, which is then used to determine the idealized response $X_i$. The latter is simply the former convolved with the hemodynamic response function. The orange trace indicates the data at a particular voxel. It can be seen that it responds quite well to condition $C_i$." width="75%" />
+<p class="caption">
+Figure 3.2: The timing diagram specifies the condition <span class="math inline">\(C_i\)</span>, which is then used to determine the idealized response <span class="math inline">\(X_i\)</span>. The latter is simply the former convolved with the hemodynamic response function. The orange trace indicates the data at a particular voxel. It can be seen that it responds quite well to condition <span class="math inline">\(C_i\)</span>.
+</p>
+</div>
+<p>For a specific individual, the exact procedure is repeated for all voxels in the brain. The space of voxels is often masked so as to consider only voxels that fall in gray matter, which is where neurons are found.</p>
+<p>Before ending this brief introduction, it’s useful to consider the geometry of least-squares regression, which will provide a deeper understanding of what we’re doing. Inspection of Equation (1) should lead to the intuition that once the <span class="math inline">\(\beta\)</span> coefficients are determined, <span class="math inline">\(\mathbf{\hat{Y}}\)</span> is a “new” version of <span class="math inline">\(\mathbf{Y}\)</span> in a new coordinate system. Specifically, the coordinate system is given by the hyperplane spanned by the vectors <span class="math inline">\(\mathbf{X}_i\)</span>. Moreover, <span class="math inline">\(\mathbf{\hat{Y}}\)</span> is the predicted vector which is the projection of the original <span class="math inline">\(\mathbf{Y}\)</span> onto the space defined by the basis vectors <span class="math inline">\(\mathbf{X}_i\)</span>. Overall the approach is quite elegant! <span class="math display">\[\mathbf{\hat{Y}=X\hat{\beta}}\]</span></p>
+<div class="figure"><span id="fig:unnamed-chunk-5"></span>
+<img src="images/regression-geometry.png" alt="Geometric interpretation of multiple regression as the orthogonal projection of the original data onto the space spanned by the explanatory variables. Essentially this is your data projected onto your experimental variables." width="75%" />
+<p class="caption">
+Figure 3.3: Geometric interpretation of multiple regression as the orthogonal projection of the original data onto the space spanned by the explanatory variables. Essentially this is your data projected onto your experimental variables.
+</p>
+</div>
+<p><strong>Group analysis</strong></p>
+<p>Group analysis is performed as follows. For a specific voxel v, regression coefficients are estimated for every condition and individual. This is considered the <em>first level</em>. Subsequently, a statistical test is performed that uses first-level regression coefficients. Standard tests such as a t test or ANOVA can be performed. The important point about the second-level statistical test is that it is performed <em>across participants</em>. In other words, from a given participant (and voxel), only a single regression coefficient <span class="math inline">\(\beta_i\)</span> is carried from the first to the second level. At the second level, one can then think of a mean coefficient per condition, together with its variability. In this manner, across-participant variability is factored into the statistics which is then considered to be a “random effects” analysis. In other words, participants are randomly sampled from the population when one samples them to participate in the experiment, and in this sense the statistical results speak to the properties of the population (which is the theoretical object of interest).</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="between-participant-estimates.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["pessoa_blog_part3.pdf", "pessoa_blog_part3.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
